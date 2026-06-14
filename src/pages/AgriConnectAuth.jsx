@@ -138,7 +138,7 @@ function RegisterPage({ onBack, onNext }) {
         <input type="checkbox" checked={form.agreed} onChange={e => setForm(f => ({ ...f, agreed: e.target.checked }))} style={{ marginTop: 2 }} />
         <span>I agree to the <span style={{ color: GREEN }}>Terms & Conditions</span> and <span style={{ color: GREEN }}>Privacy Policy</span></span>
       </div>
-      <Btn onClick={onNext}>Continue</Btn>
+      <Btn onClick={() => onNext(form)} disabled={!form.name || !form.email || !form.phone || !form.pass || !form.agreed}>Continue</Btn>
       <p style={{ textAlign: "center", fontSize: 13, marginTop: 16, color: "#666" }}>
         Already have an account? <span style={{ color: GREEN, cursor: "pointer", fontWeight: 700 }} onClick={onBack}>Login here</span>
       </p>
@@ -379,9 +379,11 @@ function OTPPage({ onNext }) {
   );
 }
 
-function SuccessPage({ onDashboard }) {
+function SuccessPage({ onDashboard, name }) {
+  const displayName = name || "Jean Baptiste";
+  const initials = displayName.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase();
   return (
-    <Card>
+    <Card style={{ maxWidth: 440 }}>
       <Logo />
       <div style={{ textAlign: "center", padding: "16px 0 24px" }}>
         <div style={{
@@ -391,8 +393,13 @@ function SuccessPage({ onDashboard }) {
         <h2 style={{ fontSize: 22, color: "#1a1a1a", marginBottom: 8 }}>Account Created Successfully!</h2>
         <p style={{ fontSize: 14, color: "#666", marginBottom: 24 }}>Your identity has been verified and your account is now active.</p>
         <div style={{ background: GREEN_LIGHT, border: `1px solid ${BORDER}`, borderRadius: 12, padding: "16px 20px", marginBottom: 24, textAlign: "left" }}>
-          <div style={{ fontWeight: 700, color: GREEN, fontSize: 15, marginBottom: 4 }}>Welcome to AgriConnect</div>
-          <div style={{ fontSize: 13, color: "#444" }}>You can now access all platform features.</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <div style={{ width: 40, height: 40, borderRadius: "50%", background: GREEN, display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 700, fontSize: 15 }}>{initials}</div>
+            <div>
+              <div style={{ fontWeight: 700, color: GREEN, fontSize: 15 }}>Welcome, {displayName}!</div>
+              <div style={{ fontSize: 13, color: "#444" }}>Your account is ready. You can now access all platform features.</div>
+            </div>
+          </div>
         </div>
         <Btn onClick={onDashboard}>Go to Dashboard</Btn>
       </div>
@@ -400,16 +407,25 @@ function SuccessPage({ onDashboard }) {
   );
 }
 
-function Dashboard({ onLogout }) {
+function Dashboard({ user, onLogout }) {
+  const roleName = roles.find(r => r.id === user?.role)?.title || "User";
+  const roleIcon = roles.find(r => r.id === user?.role)?.icon || "👤";
+  const initials = (user?.name || "U").split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase();
   return (
     <Card style={{ maxWidth: 440 }}>
       <Logo />
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
         <div>
           <div style={{ fontWeight: 700, fontSize: 18, color: "#1a1a1a" }}>Dashboard</div>
-          <div style={{ fontSize: 13, color: "#666" }}>Welcome, Jean Baptiste!</div>
+          <div style={{ fontSize: 13, color: "#666" }}>Welcome, {user?.name || "User"}!</div>
         </div>
-        <div style={{ width: 42, height: 42, borderRadius: "50%", background: GREEN, display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 700, fontSize: 15 }}>JB</div>
+        <div style={{ width: 42, height: 42, borderRadius: "50%", background: GREEN, display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 700, fontSize: 15 }}>{initials}</div>
+      </div>
+      <div style={{ background: GREEN_LIGHT, border: `1px solid ${BORDER}`, borderRadius: 12, padding: "12px 14px", marginBottom: 20 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ fontSize: 20 }}>{roleIcon}</span>
+          <span style={{ fontWeight: 700, fontSize: 14, color: GREEN_DARK }}>{roleName}</span>
+        </div>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 20 }}>
         {[["🌱", "My Farm", "Manage crops"], ["📦", "My Products", "List & sell"], ["💰", "Sales", "Track orders"], ["📊", "Analytics", "View reports"]].map(([icon, t, d]) => (
@@ -422,7 +438,7 @@ function Dashboard({ onLogout }) {
       </div>
       <div style={{ background: "#f9f9f9", borderRadius: 10, padding: "12px 14px", marginBottom: 20, border: `1px solid ${BORDER}` }}>
         <div style={{ fontWeight: 700, fontSize: 13, color: "#1a1a1a", marginBottom: 8 }}>Account Status</div>
-        {[["Identity", "✅ Verified"], ["Phone", "✅ Verified"], ["Role", "🌾 Farmer"]].map(([k, v]) => (
+        {[["Identity", "✅ Verified"], ["Phone", "✅ Verified"], ["Role", `${roleIcon} ${roleName}`]].map(([k, v]) => (
           <div key={k} style={{ display: "flex", justifyContent: "space-between", fontSize: 13, padding: "4px 0" }}>
             <span style={{ color: "#666" }}>{k}</span><span style={{ fontWeight: 600 }}>{v}</span>
           </div>
@@ -436,6 +452,7 @@ function Dashboard({ onLogout }) {
 export default function AgriConnectAuth({ onLogin, onLogout }) {
   const [screen, setScreen] = useState("login");
   const [role, setRole] = useState(null);
+  const [formData, setFormData] = useState(null);
 
   const go = (s) => setScreen(s);
 
@@ -452,7 +469,10 @@ export default function AgriConnectAuth({ onLogin, onLogout }) {
         return (
           <RegisterPage
             onBack={() => go("login")}
-            onNext={() => go("role")}
+            onNext={(form) => {
+              setFormData(form);
+              go("role");
+            }}
           />
         );
       case "role":
@@ -486,14 +506,17 @@ export default function AgriConnectAuth({ onLogin, onLogout }) {
       case "success":
         return (
           <SuccessPage
-            onDashboard={() => onLogin({ role })}
+            onDashboard={() => onLogin({ role, name: formData?.name })}
+            name={formData?.name}
           />
         );
       case "dashboard":
         return (
           <Dashboard
+            user={{ role, name: formData?.name }}
             onLogout={() => {
               setRole(null);
+              setFormData(null);
               go("login");
             }}
           />
