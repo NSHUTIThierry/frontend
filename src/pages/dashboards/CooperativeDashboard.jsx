@@ -1,8 +1,16 @@
-import React from 'react';
+import { useState } from 'react';
+
+function dashContent(t) {
+  if (t === 'dashboard') {return <div className="dcard"><h4>Dashboard Overview</h4><p style={{fontSize:'11px',color:'#666'}}>Welcome to your cooperative dashboard.</p></div>;}
+  var titles = {members:'Members',procurement:'Procurement',sales:'Collective Sales',finance:'Finance',analytics:'Analytics',reports:'Reports',alerts:'Alerts',messages:'Messages',settings:'Settings'};
+  return <div className="dcard"><h4>{titles[t] || t}</h4><p style={{fontSize:'11px',color:'#666'}}>Content coming soon.</p></div>;
+}
 
 export default function CooperativeDashboard({ user, onLogout }) {
   const first = user?.name?.split(' ')[0] || 'Pierre';
   const inits = user?.initials || 'PN';
+  var sT = useState('dashboard');
+  var tab = sT[0], setTab = sT[1];
 
   return (
     <div className="page on" id="pg-dash-coop">
@@ -18,16 +26,16 @@ export default function CooperativeDashboard({ user, onLogout }) {
             </div>
           </div>
           <div className="dash-nav">
-            <div className="di act"><span className="dii">⊞</span><span>Dashboard</span></div>
-            <div className="di"><span className="dii">👥</span><span>Members</span></div>
-            <div className="di"><span className="dii">🛒</span><span>Procurement</span></div>
-            <div className="di"><span className="dii">💰</span><span>Collective Sales</span></div>
-            <div className="di"><span className="dii">💳</span><span>Finance</span></div>
-            <div className="di"><span className="dii">📊</span><span>Analytics</span></div>
-            <div className="di"><span className="dii">📋</span><span>Reports</span><span className="dib">4</span></div>
-            <div className="di"><span className="dii">🔔</span><span>Alerts</span></div>
-            <div className="di"><span className="dii">✉</span><span>Messages</span><span className="dib">3</span></div>
-            <div className="di"><span className="dii">⚙</span><span>Settings</span></div>
+            <div className={'di ' + (tab==='dashboard' ? 'act' : '')} onClick={function(){setTab('dashboard');}}><span className="dii">⊞</span><span>Dashboard</span></div>
+            <div className={'di ' + (tab==='members' ? 'act' : '')} onClick={function(){setTab('members');}}><span className="dii">👥</span><span>Members</span></div>
+            <div className={'di ' + (tab==='procurement' ? 'act' : '')} onClick={function(){setTab('procurement');}}><span className="dii">🛒</span><span>Procurement</span></div>
+            <div className={'di ' + (tab==='sales' ? 'act' : '')} onClick={function(){setTab('sales');}}><span className="dii">💰</span><span>Collective Sales</span></div>
+            <div className={'di ' + (tab==='finance' ? 'act' : '')} onClick={function(){setTab('finance');}}><span className="dii">💳</span><span>Finance</span></div>
+            <div className={'di ' + (tab==='analytics' ? 'act' : '')} onClick={function(){setTab('analytics');}}><span className="dii">📊</span><span>Analytics</span></div>
+            <div className={'di ' + (tab==='reports' ? 'act' : '')} onClick={function(){setTab('reports');}}><span className="dii">📋</span><span>Reports</span><span className="dib">4</span></div>
+            <div className={'di ' + (tab==='alerts' ? 'act' : '')} onClick={function(){setTab('alerts');}}><span className="dii">🔔</span><span>Alerts</span></div>
+            <div className={'di ' + (tab==='messages' ? 'act' : '')} onClick={function(){setTab('messages');}}><span className="dii">✉</span><span>Messages</span><span className="dib">3</span></div>
+            <div className={'di ' + (tab==='settings' ? 'act' : '')} onClick={function(){setTab('settings');}}><span className="dii">⚙</span><span>Settings</span></div>
           </div>
           <div className="sb-prof">
             <div className="sb-prof-card">

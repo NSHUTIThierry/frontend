@@ -1,8 +1,9 @@
-import React from 'react';
+import { useState } from 'react';
 
 export default function AgronomistDashboard({ user, onLogout }) {
   const first = user?.name?.split(' ')[0] || 'Jean';
   const inits = user?.initials || 'JD';
+  const [tab, setTab] = useState('dashboard');
 
   return (
     <div className="page on" id="pg-dash-agro">
@@ -10,19 +11,19 @@ export default function AgronomistDashboard({ user, onLogout }) {
         <div className="dash-sb">
           <div className="dash-sb-top"><div className="dash-sb-logo"><div className="li">🌿</div><div><div className="lt">AgriConnect</div><div className="ls">Rwanda</div></div></div></div>
           <div className="dash-nav">
-            <div className="di act"><span className="dii">⊞</span><span>Dashboard</span></div>
-            <div className="di"><span className="dii">📋</span><span>Appt Requests</span><span className="dib">5</span></div>
-            <div className="di"><span className="dii">📅</span><span>My Appointments</span></div>
-            <div className="di"><span className="dii">👥</span><span>Assigned Farmers</span></div>
-            <div className="di"><span className="dii">📄</span><span>Farm Reports</span><span className="dib">3</span></div>
-            <div className="di"><span className="dii">💬</span><span>Recommendations</span></div>
-            <div className="di"><span className="dii">📍</span><span>Field Visits</span></div>
-            <div className="di"><span className="dii">🔔</span><span>Alerts</span><span className="dib">2</span></div>
-            <div className="di"><span className="dii">📚</span><span>Knowledge Base</span></div>
-            <div className="di"><span className="dii">📊</span><span>Analytics</span></div>
-            <div className="di"><span className="dii">✉</span><span>Messages</span><span className="dib">7</span></div>
-            <div className="di"><span className="dii">👤</span><span>Profile</span></div>
-            <div className="di"><span className="dii">⚙</span><span>Settings</span></div>
+            <div className={'di ' + (tab==='dashboard' ? 'act' : '')} onClick={function(){setTab('dashboard');}}><span className="dii">⊞</span><span>Dashboard</span></div>
+            <div className={'di ' + (tab==='apptRequests' ? 'act' : '')} onClick={function(){setTab('apptRequests');}}><span className="dii">📋</span><span>Appt Requests</span><span className="dib">5</span></div>
+            <div className={'di ' + (tab==='appointments' ? 'act' : '')} onClick={function(){setTab('appointments');}}><span className="dii">📅</span><span>My Appointments</span></div>
+            <div className={'di ' + (tab==='farmers' ? 'act' : '')} onClick={function(){setTab('farmers');}}><span className="dii">👥</span><span>Assigned Farmers</span></div>
+            <div className={'di ' + (tab==='reports' ? 'act' : '')} onClick={function(){setTab('reports');}}><span className="dii">📄</span><span>Farm Reports</span><span className="dib">3</span></div>
+            <div className={'di ' + (tab==='recommendations' ? 'act' : '')} onClick={function(){setTab('recommendations');}}><span className="dii">💬</span><span>Recommendations</span></div>
+            <div className={'di ' + (tab==='visits' ? 'act' : '')} onClick={function(){setTab('visits');}}><span className="dii">📍</span><span>Field Visits</span></div>
+            <div className={'di ' + (tab==='alerts' ? 'act' : '')} onClick={function(){setTab('alerts');}}><span className="dii">🔔</span><span>Alerts</span><span className="dib">2</span></div>
+            <div className={'di ' + (tab==='knowledge' ? 'act' : '')} onClick={function(){setTab('knowledge');}}><span className="dii">📚</span><span>Knowledge Base</span></div>
+            <div className={'di ' + (tab==='analytics' ? 'act' : '')} onClick={function(){setTab('analytics');}}><span className="dii">📊</span><span>Analytics</span></div>
+            <div className={'di ' + (tab==='messages' ? 'act' : '')} onClick={function(){setTab('messages');}}><span className="dii">✉</span><span>Messages</span><span className="dib">7</span></div>
+            <div className={'di ' + (tab==='profile' ? 'act' : '')} onClick={function(){setTab('profile');}}><span className="dii">👤</span><span>Profile</span></div>
+            <div className={'di ' + (tab==='settings' ? 'act' : '')} onClick={function(){setTab('settings');}}><span className="dii">⚙</span><span>Settings</span></div>
           </div>
           <div className="sb-prof"><div className="sb-prof-card"><div className="sb-prow"><div className="sb-av" id="agro-av">{inits}</div><div><div className="sb-pname" id="agro-name">{user?.name || 'Jean de Dieu'}</div><div className="sb-prole">Agronomist ✅</div></div></div><div className="sb-pdet">📞 +250 788 123 456</div><div className="sb-pdet" id="agro-email">✉ {user?.email || 'jean@agri.rw'}</div><button onClick={onLogout} style={{ width: '100%', marginTop: '5px', background: 'transparent', border: '0.5px solid #f87171', color: '#f87171', padding: '3px', borderRadius: '4px', fontSize: '7px', cursor: 'pointer' }}>Logout</button></div></div>
         </div>

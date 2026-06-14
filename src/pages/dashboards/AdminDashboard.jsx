@@ -1,8 +1,9 @@
-import React from 'react';
+import { useState } from 'react';
 
 export default function AdminDashboard({ user, onLogout }) {
   const first = user?.name?.split(' ')[0] || 'Admin';
   const inits = user?.initials || 'AD';
+  const [tab, setTab] = useState('dashboard');
 
   return (
     <div className="page on" id="pg-dash-admin">
@@ -18,16 +19,16 @@ export default function AdminDashboard({ user, onLogout }) {
             </div>
           </div>
           <div className="dash-nav">
-            <div className="di act"><span className="dii">⊞</span><span>Dashboard</span></div>
-            <div className="di"><span className="dii">👥</span><span>All Users</span></div>
-            <div className="di"><span className="dii">👨‍🌾</span><span>Farmers</span></div>
-            <div className="di"><span className="dii">👨‍🔬</span><span>Agronomists</span></div>
-            <div className="di"><span className="dii">🤝</span><span>Cooperatives</span></div>
-            <div className="di"><span className="dii">🛒</span><span>Marketplace</span></div>
-            <div className="di"><span className="dii">📋</span><span>Reports</span><span className="dib">12</span></div>
-            <div className="di"><span className="dii">🔔</span><span>Alerts</span><span className="dib">5</span></div>
-            <div className="di"><span className="dii">📊</span><span>Analytics</span></div>
-            <div className="di"><span className="dii">⚙</span><span>System Settings</span></div>
+            <div className={'di ' + (tab==='dashboard' ? 'act' : '')} onClick={function(){setTab('dashboard');}}><span className="dii">⊞</span><span>Dashboard</span></div>
+            <div className={'di ' + (tab==='users' ? 'act' : '')} onClick={function(){setTab('users');}}><span className="dii">👥</span><span>All Users</span></div>
+            <div className={'di ' + (tab==='farmers' ? 'act' : '')} onClick={function(){setTab('farmers');}}><span className="dii">👨‍🌾</span><span>Farmers</span></div>
+            <div className={'di ' + (tab==='agronomists' ? 'act' : '')} onClick={function(){setTab('agronomists');}}><span className="dii">👨‍🔬</span><span>Agronomists</span></div>
+            <div className={'di ' + (tab==='cooperatives' ? 'act' : '')} onClick={function(){setTab('cooperatives');}}><span className="dii">🤝</span><span>Cooperatives</span></div>
+            <div className={'di ' + (tab==='marketplace' ? 'act' : '')} onClick={function(){setTab('marketplace');}}><span className="dii">🛒</span><span>Marketplace</span></div>
+            <div className={'di ' + (tab==='reports' ? 'act' : '')} onClick={function(){setTab('reports');}}><span className="dii">📋</span><span>Reports</span><span className="dib">12</span></div>
+            <div className={'di ' + (tab==='alerts' ? 'act' : '')} onClick={function(){setTab('alerts');}}><span className="dii">🔔</span><span>Alerts</span><span className="dib">5</span></div>
+            <div className={'di ' + (tab==='analytics' ? 'act' : '')} onClick={function(){setTab('analytics');}}><span className="dii">📊</span><span>Analytics</span></div>
+            <div className={'di ' + (tab==='settings' ? 'act' : '')} onClick={function(){setTab('settings');}}><span className="dii">⚙</span><span>System Settings</span></div>
           </div>
           <div className="sb-prof">
             <div className="sb-prof-card">
