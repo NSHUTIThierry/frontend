@@ -9,8 +9,6 @@ import CooperativesPage from './pages/CooperativesPage';
 import ReportsPage from './pages/ReportsPage';
 import AboutPage from './pages/AboutPage';
 import AgriConnectAuth from './pages/AgriConnectAuth';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
 import AgronomistDashboard from './pages/dashboards/AgronomistDashboard';
 import FarmerDashboard from './pages/dashboards/FarmerDashboard';
 import CooperativeDashboard from './pages/dashboards/CooperativeDashboard';
