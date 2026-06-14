@@ -8,8 +8,7 @@ import ServicesPage from './pages/ServicesPage';
 import CooperativesPage from './pages/CooperativesPage';
 import ReportsPage from './pages/ReportsPage';
 import AboutPage from './pages/AboutPage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
+import AgriConnectAuth from './pages/AgriConnectAuth';
 import AgronomistDashboard from './pages/dashboards/AgronomistDashboard';
 import FarmerDashboard from './pages/dashboards/FarmerDashboard';
 import CooperativeDashboard from './pages/dashboards/CooperativeDashboard';
@@ -56,9 +55,7 @@ function App() {
       case 'about':
         return <AboutPage onGoTo={handleGoTo} />;
       case 'login':
-        return <LoginPage onGoTo={handleGoTo} onLogin={handleLogin} />;
-      case 'register':
-        return <RegisterPage onGoTo={handleGoTo} onLogin={handleLogin} />;
+        return <AgriConnectAuth onLogin={handleLogin} />;
       case 'dash-agro':
         return <AgronomistDashboard user={currentUser} onLogout={handleLogout} />;
       case 'dash-farmer':
