@@ -55,9 +55,8 @@ function App() {
       case 'about':
         return <AboutPage onGoTo={handleGoTo} />;
       case 'login':
-        return <LoginPage onGoTo={handleGoTo} onLogin={handleLogin} />;
       case 'register':
-        return <RegisterPage onGoTo={handleGoTo} onLogin={handleLogin} />;
+        return <AgriConnectAuth onLogin={handleLogin} />;
       case 'dash-agro':
         return <AgronomistDashboard user={currentUser} onLogout={handleLogout} />;
       case 'dash-farmer':
