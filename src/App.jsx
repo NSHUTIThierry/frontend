@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import Navigation from './components/Navigation';
-import Topbar from './components/Topbar';
+import Topbar from './Topbar';
 import HomePage from './pages/HomePage';
 import MarketplacePage from './pages/MarketplacePage';
 import ServicesPage from './pages/ServicesPage';
@@ -9,6 +9,8 @@ import CooperativesPage from './pages/CooperativesPage';
 import ReportsPage from './pages/ReportsPage';
 import AboutPage from './pages/AboutPage';
 import AgriConnectAuth from './pages/AgriConnectAuth';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import AgronomistDashboard from './pages/dashboards/AgronomistDashboard';
 import FarmerDashboard from './pages/dashboards/FarmerDashboard';
 import CooperativeDashboard from './pages/dashboards/CooperativeDashboard';
@@ -55,7 +57,9 @@ function App() {
       case 'about':
         return <AboutPage onGoTo={handleGoTo} />;
       case 'login':
-        return <AgriConnectAuth onLogin={handleLogin} />;
+        return <LoginPage onGoTo={handleGoTo} onLogin={handleLogin} />;
+      case 'register':
+        return <RegisterPage onGoTo={handleGoTo} onLogin={handleLogin} />;
       case 'dash-agro':
         return <AgronomistDashboard user={currentUser} onLogout={handleLogout} />;
       case 'dash-farmer':

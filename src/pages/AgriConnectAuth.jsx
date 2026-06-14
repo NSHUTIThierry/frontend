@@ -486,7 +486,7 @@ export default function AgriConnectAuth({ onLogin, onLogout }) {
       case "success":
         return (
           <SuccessPage
-            onDashboard={() => go("dashboard")}
+            onDashboard={() => onLogin({ role })}
           />
         );
       case "dashboard":
